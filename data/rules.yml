@@ -1,0 +1,23 @@
+version: "3.1"
+
+rules:
+
+- rule: Activate project scope form
+  steps:
+    - intent: provide_project_scope
+    - action: project_scope_form
+    - active_loop: project_scope_form
+
+- rule: Submit project scope form
+  condition:
+    - active_loop: project_scope_form
+  steps:
+    - action: project_scope_form
+    - active_loop: null
+    - action: utter_submit
+    - action: action_match_cros
+
+- rule: Say goodbye
+  steps:
+    - intent: goodbye
+    - action: utter_goodbye

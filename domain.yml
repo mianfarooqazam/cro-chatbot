@@ -1,0 +1,81 @@
+version: "3.1"
+
+intents:
+  - greet
+  - provide_project_scope
+  - affirm
+  - deny
+  - select_cro
+  - send_project
+  - goodbye
+
+entities:
+  - industry
+  - service
+  - budget
+  - timeline
+  - cro_name
+
+slots:
+  industry:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: industry
+  service:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: service
+  budget:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: budget
+  timeline:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: timeline
+  cro_name:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: cro_name
+
+forms:
+  project_scope_form:
+    required_slots:
+      - industry
+      - service
+      - budget
+      - timeline
+
+responses:
+  utter_greet:
+    - text: "Hello! I can help you find the right CRO for your project. Can you tell me about your project?"
+  utter_ask_industry:
+    - text: "What is the industry or field of your project? (e.g., pharma, medical device, oncology)"
+  utter_ask_service:
+    - text: "What service do you need? (e.g., clinical trial, regulatory support)"
+  utter_ask_budget:
+    - text: "What is your budget for this project?"
+  utter_ask_timeline:
+    - text: "What is your project timeline?"
+  utter_submit:
+    - text: "Thank you! Let me find the best CROs for your project."
+  utter_goodbye:
+    - text: "Goodbye! If you need more help, just ask."
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+
+actions:
+  - action_match_cros
+  - action_send_project

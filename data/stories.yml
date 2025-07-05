@@ -1,0 +1,19 @@
+version: "3.1"
+
+stories:
+
+- story: CRO project matching happy path
+  steps:
+    - intent: greet
+    - action: utter_greet
+    - action: project_scope_form
+    - active_loop: project_scope_form
+    - active_loop: null
+    - action: utter_submit
+    - action: action_match_cros
+    - intent: select_cro
+      entities:
+        - cro_name: "CRO Alpha"
+    - action: action_send_project
+    - intent: goodbye
+    - action: utter_goodbye

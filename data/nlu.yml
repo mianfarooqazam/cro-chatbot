@@ -1,0 +1,108 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hi
+    - hello
+    - hey
+    - good morning
+    - good afternoon
+
+- intent: provide_project_scope
+  examples: |
+    - I need help with a [clinical trial](service) in the [oncology](industry) field
+    - We are looking for a CRO for a [medical device](industry) project
+    - Our budget is [50000 USD](budget)
+    - The project timeline is [6 months](timeline)
+    - I want to run a [pharma](industry) study
+    - I need [regulatory support](service)
+    - We have a [3 month](timeline) deadline
+    - The budget is [100k](budget)
+    - Budget is [5000](budget)
+    - Our budget is [10000](budget)
+    - Budget [25000](budget)
+    - [5000 USD](budget)
+    - [10000 dollars](budget)
+    - [15000](budget) budget
+    - Budget of [7500](budget)
+    - [3000 USD](budget) for the project
+    - [8000](budget) total budget
+
+- intent: affirm
+  examples: |
+    - yes
+    - correct
+    - that's right
+    - sure
+    - absolutely
+
+- intent: deny
+  examples: |
+    - no
+    - not really
+    - nope
+    - that's not right
+
+- intent: select_cro
+  examples: |
+    - I want to pick [CRO Alpha](cro_name)
+    - Select [Beta CRO](cro_name)
+    - Choose [Gamma Research](cro_name)
+    - I choose [Delta CRO](cro_name)
+
+- intent: send_project
+  examples: |
+    - Send my project
+    - Submit the project
+    - Forward details
+    - Contact the CRO
+
+- intent: goodbye
+  examples: |
+    - bye
+    - goodbye
+    - see you
+    - talk later
+    - thanks, bye
+
+- intent: mood_great
+  examples: |
+    - perfect
+    - great
+    - amazing
+    - feeling like a king
+    - wonderful
+    - I am feeling very good
+    - I am great
+    - I am amazing
+    - I am going to save the world
+    - super stoked
+    - extremely good
+    - so so perfect
+    - so good
+    - so perfect
+
+- intent: mood_unhappy
+  examples: |
+    - my day was horrible
+    - I am sad
+    - I don't feel very well
+    - I am disappointed
+    - super sad
+    - I'm so sad
+    - sad
+    - very sad
+    - unhappy
+    - not good
+    - not very good
+    - extremly sad
+    - so saad
+    - so sad
+
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
