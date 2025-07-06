@@ -2,24 +2,32 @@
 ## Setup Instructions
 
 ### Prerequisites
-- Python 3.8 or higher
+- Python 3.8
 - pip (Python package manager)
 
 ### Installation
 
-
-1. **Install dependencies**
+1. **Install python 3.8** ( Works well with Rasa )
+   
+2. **Create a Virtual Environment with Python 3.8**
+   ```bash
+   python3.8 -m venv venv
+   ```
+3. **Activate the Virtual Environment**
+   ```bash
+   source venv/bin/activate
+   ```
+4. **Install Dependencies**
    ```bash
    pip install -r requirements.txt
-   ```
-
-
-2. **Start the action server** (Terminal 1)
+   ```   
+   
+5. **Start the action server** (Terminal 1)
    ```bash
    rasa run actions
    ```
 
-3. **Start the Rasa server** (Terminal 2)
+6. **Start the Rasa server** (Terminal 2)
    ```bash
    rasa shell
    ```
