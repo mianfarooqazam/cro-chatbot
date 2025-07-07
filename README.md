@@ -8,6 +8,10 @@
 ### Installation
 
 1. **Install python 3.8** ( Works well with Rasa )
+   ```bash
+   brew install pyenv
+   pyenv install 3.8.18
+   ```
    
 2. **Create a Virtual Environment with Python 3.8**
    ```bash
