@@ -70,4 +70,7 @@ coverage.xml
 .env.*
 
 # Rasa model files
-models/ 
+models/
+
+# Rasa cache and temp files
+.rasa/ 
