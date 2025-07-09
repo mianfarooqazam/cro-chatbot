@@ -8,33 +8,47 @@ intents:
   - select_cro
   - send_project
   - goodbye
+  - start_project_scoping
+  - provide_study_phase
+  - provide_therapeutic_area
+  - provide_services_needed
+  - provide_patient_population
+  - provide_timeline
+  - complete_project_scope
 
 entities:
-  - industry
-  - service
-  - budget
+  - study_phase
+  - therapeutic_area
+  - service_needed
+  - patient_population
   - timeline
   - cro_name
 
 slots:
-  industry:
+  study_phase:
     type: text
     influence_conversation: true
     mappings:
       - type: from_entity
-        entity: industry
-  service:
+        entity: study_phase
+  therapeutic_area:
     type: text
     influence_conversation: true
     mappings:
       - type: from_entity
-        entity: service
-  budget:
+        entity: therapeutic_area
+  services_needed:
+    type: list
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: service_needed
+  patient_population:
     type: text
     influence_conversation: true
     mappings:
       - type: from_entity
-        entity: budget
+        entity: patient_population
   timeline:
     type: text
     influence_conversation: true
@@ -47,35 +61,53 @@ slots:
     mappings:
       - type: from_entity
         entity: cro_name
+  project_scope_complete:
+    type: bool
+    influence_conversation: true
+    initial_value: false
+    mappings:
+      - type: custom
 
 forms:
   project_scope_form:
     required_slots:
-      - industry
-      - service
-      - budget
+      - study_phase
+      - therapeutic_area
+      - services_needed
+      - patient_population
       - timeline
 
 responses:
   utter_greet:
-    - text: "Hello! I can help you find the right CRO for your project. Can you tell me about your project?"
-  utter_ask_industry:
-    - text: "What is the industry or field of your project? (e.g., pharma, medical device, oncology)"
-  utter_ask_service:
-    - text: "What service do you need? (e.g., clinical trial, regulatory support)"
-  utter_ask_budget:
-    - text: "What is your budget for this project?"
+    - text: "Hello! I'm CRO-AI, your expert assistant for CROaccess.com. I'm here to help you build a detailed project scope and find the perfect CRO for your research needs. Can you tell me about your project?"
+  
+  utter_ask_study_phase:
+    - text: "What phase of study are you planning? (e.g., Phase I, Phase II, Phase III, Phase IV, Preclinical)"
+  
+  utter_ask_therapeutic_area:
+    - text: "What therapeutic area is your project focused on? (e.g., oncology, cardiology, neurology, immunology, diabetes)"
+  
+  utter_ask_services_needed:
+    - text: "What services do you need? You can mention multiple services like clinical trial management, data management, regulatory support, patient recruitment, etc."
+  
+  utter_ask_patient_population:
+    - text: "What is your target patient population? (e.g., adults, pediatric, elderly, specific age ranges)"
+  
   utter_ask_timeline:
-    - text: "What is your project timeline?"
-  utter_submit:
-    - text: "Thank you! Let me find the best CROs for your project."
+    - text: "What is your project timeline? (e.g., 6 months, 1 year, 18 months)"
+  
+  utter_project_scope_complete:
+    - text: "Perfect! I have all the information I need to find the best CROs for your project."
+  
   utter_goodbye:
-    - text: "Goodbye! If you need more help, just ask."
+    - text: "Thank you for using CRO-AI! If you need more help finding the right CRO, just ask."
 
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
 
 actions:
+  - action_start_project_scoping
   - action_match_cros
   - action_send_project
+  - action_output_project_scope

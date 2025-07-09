@@ -2,18 +2,105 @@ version: "3.1"
 
 stories:
 
-- story: CRO project matching happy path
+- story: CRO-AI project scoping happy path
   steps:
     - intent: greet
     - action: utter_greet
-    - action: project_scope_form
-    - active_loop: project_scope_form
-    - active_loop: null
-    - action: utter_submit
+    - intent: start_project_scoping
+    - action: action_start_project_scoping
+    - intent: provide_study_phase
+      entities:
+        - study_phase: "Phase II"
+    - slot_was_set:
+        - study_phase: "Phase II"
+    - action: utter_ask_therapeutic_area
+    - intent: provide_therapeutic_area
+      entities:
+        - therapeutic_area: "oncology"
+    - slot_was_set:
+        - therapeutic_area: "oncology"
+    - action: utter_ask_services_needed
+    - intent: provide_services_needed
+      entities:
+        - service_needed: "clinical trial management"
+        - service_needed: "data management"
+    - slot_was_set:
+        - services_needed: ["clinical trial management", "data management"]
+    - action: utter_ask_patient_population
+    - intent: provide_patient_population
+      entities:
+        - patient_population: "adults"
+    - slot_was_set:
+        - patient_population: "adults"
+    - action: utter_ask_timeline
+    - intent: provide_timeline
+      entities:
+        - timeline: "1 year"
+    - slot_was_set:
+        - timeline: "1 year"
+    - intent: complete_project_scope
+    - action: action_output_project_scope
     - action: action_match_cros
     - intent: select_cro
       entities:
-        - cro_name: "CRO Alpha"
+        - cro_name: "Pylon Phenomics"
     - action: action_send_project
     - intent: goodbye
     - action: utter_goodbye
+
+- story: Alternative project scoping flow
+  steps:
+    - intent: greet
+    - action: utter_greet
+    - intent: provide_study_phase
+      entities:
+        - study_phase: "Phase III"
+    - slot_was_set:
+        - study_phase: "Phase III"
+    - action: utter_ask_therapeutic_area
+    - intent: provide_therapeutic_area
+      entities:
+        - therapeutic_area: "cardiology"
+    - slot_was_set:
+        - therapeutic_area: "cardiology"
+    - action: utter_ask_services_needed
+    - intent: provide_services_needed
+      entities:
+        - service_needed: "regulatory support"
+        - service_needed: "patient recruitment"
+    - slot_was_set:
+        - services_needed: ["regulatory support", "patient recruitment"]
+    - action: utter_ask_patient_population
+    - intent: provide_patient_population
+      entities:
+        - patient_population: "elderly"
+    - slot_was_set:
+        - patient_population: "elderly"
+    - action: utter_ask_timeline
+    - intent: provide_timeline
+      entities:
+        - timeline: "18 months"
+    - slot_was_set:
+        - timeline: "18 months"
+    - action: action_output_project_scope
+    - action: action_match_cros
+
+- story: Direct project information
+  steps:
+    - intent: greet
+    - action: utter_greet
+    - intent: provide_study_phase
+      entities:
+        - study_phase: "Phase I"
+        - therapeutic_area: "neurology"
+        - service_needed: "clinical trial management"
+        - patient_population: "adults"
+        - timeline: "6 months"
+    - slot_was_set:
+        - study_phase: "Phase I"
+        - therapeutic_area: "neurology"
+        - services_needed: ["clinical trial management"]
+        - patient_population: "adults"
+        - timeline: "6 months"
+    - action: action_output_project_scope
+    - action: action_match_cros

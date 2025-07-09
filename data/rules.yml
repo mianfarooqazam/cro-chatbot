@@ -2,50 +2,57 @@ version: "3.1"
 
 rules:
 
-- rule: Activate project scope form
-  steps:
-    - intent: provide_project_scope
-    - action: project_scope_form
-    - active_loop: project_scope_form
+# Removed the rule that used utter_ask_study_phase after start_project_scoping
 
-- rule: Submit project scope form
-  condition:
-    - active_loop: project_scope_form
+- rule: Start project scoping
   steps:
-    - action: project_scope_form
-    - active_loop: null
-    - action: utter_submit
+    - intent: start_project_scoping
+    - action: action_start_project_scoping
+
+- rule: Ask for therapeutic area after study phase
+  condition:
+    - slot_was_set:
+        - study_phase: true
+  steps:
+    - action: utter_ask_therapeutic_area
+
+- rule: Ask for services after therapeutic area
+  condition:
+    - slot_was_set:
+        - therapeutic_area: true
+  steps:
+    - action: utter_ask_services_needed
+
+- rule: Ask for patient population after services
+  condition:
+    - slot_was_set:
+        - services_needed: true
+  steps:
+    - action: utter_ask_patient_population
+
+- rule: Ask for timeline after patient population
+  condition:
+    - slot_was_set:
+        - patient_population: true
+  steps:
+    - action: utter_ask_timeline
+
+# Updated this rule to allow action_match_cros to follow action_output_project_scope
+- rule: Output project scope and match CROs when complete
+  condition:
+    - slot_was_set:
+        - timeline: true
+  steps:
+    - intent: complete_project_scope
+    - action: action_output_project_scope
     - action: action_match_cros
+
+- rule: Send project after CRO selection
+  steps:
+    - intent: select_cro
+    - action: action_send_project
 
 - rule: Say goodbye
   steps:
     - intent: goodbye
     - action: utter_goodbye
-
-- rule: Ask for project description again if not available
-  steps:
-    - intent: out_of_scope
-    - action: utter_service_not_available
-    - action: utter_ask_project
-
-- rule: Validate CRO selection when not in story
-  condition:
-    - slot_was_set:
-        - cro_name: null
-  steps:
-    - intent: select_cro
-    - action: action_validate_cro_selection
-
-- rule: Confirm CRO selection when user affirms
-  condition:
-    - slot_was_set:
-        - needs_cro_confirmation: true
-  steps:
-    - intent: affirm
-    - action: action_confirm_cro_selection
-    - action: action_send_project
-
-- rule: Handle timeline input
-  steps:
-    - intent: provide_timeline
-    - action: utter_ask_project

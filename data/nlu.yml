@@ -8,26 +8,117 @@ nlu:
     - hey
     - good morning
     - good afternoon
+    - start
+    - begin
 
-- intent: provide_project_scope
+- intent: start_project_scoping
   examples: |
-    - I need help with a [clinical trial](service) in the [oncology](industry) field
-    - We are looking for a CRO for a [medical device](industry) project
-    - Our budget is [50000 USD](budget)
-    - The project timeline is [6 months](timeline)
-    - I want to run a [pharma](industry) study
-    - I need [regulatory support](service)
-    - We have a [3 month](timeline) deadline
-    - The budget is [100k](budget)
-    - Budget is [5000](budget)
-    - Our budget is [10000](budget)
-    - Budget [25000](budget)
-    - [5000 USD](budget)
-    - [10000 dollars](budget)
-    - [15000](budget) budget
-    - Budget of [7500](budget)
-    - [3000 USD](budget) for the project
-    - [8000](budget) total budget
+    - I need help with a project
+    - I want to find a CRO
+    - I need to find a contract research organization
+    - Help me find the right CRO
+    - I have a research project
+    - I need CRO services
+    - Find me a CRO
+    - I need clinical trial support
+    - Looking for a CRO
+    - Need help with research project
+
+- intent: provide_study_phase
+  examples: |
+    - We are planning a [Phase I](study_phase) study
+    - This is a [Phase II](study_phase) clinical trial
+    - We need [Phase III](study_phase) support
+    - It's a [Phase IV](study_phase) study
+    - We're in [preclinical](study_phase) stage
+    - [Phase I](study_phase) clinical trial
+    - [Phase II](study_phase) study for our drug
+    - [Phase III](study_phase) trial management
+    - [Phase IV](study_phase) post-marketing study
+    - [Preclinical](study_phase) research
+    - [Phase 1](study_phase) study
+    - [Phase 2](study_phase) trial
+    - [Phase 3](study_phase) clinical trial
+    - [Phase 4](study_phase) study
+
+- intent: provide_therapeutic_area
+  examples: |
+    - Our focus is [oncology](therapeutic_area)
+    - We work in [cardiology](therapeutic_area)
+    - It's a [neurology](therapeutic_area) project
+    - [Immunology](therapeutic_area) is our specialty
+    - We're developing a [diabetes](therapeutic_area) treatment
+    - [Oncology](therapeutic_area) clinical trial
+    - [Cardiology](therapeutic_area) research
+    - [Neurology](therapeutic_area) study
+    - [Immunology](therapeutic_area) trial
+    - [Diabetes](therapeutic_area) treatment
+    - [Rheumatology](therapeutic_area) project
+    - [Dermatology](therapeutic_area) study
+    - [Respiratory](therapeutic_area) medicine
+    - [Gastroenterology](therapeutic_area) research
+
+- intent: provide_services_needed
+  examples: |
+    - We need [clinical trial management](service_needed)
+    - Looking for [data management](service_needed) services
+    - Need [regulatory support](service_needed)
+    - We require [patient recruitment](service_needed)
+    - [Clinical trial management](service_needed) and [data management](service_needed)
+    - [Regulatory support](service_needed) and [patient recruitment](service_needed)
+    - [Data management](service_needed), [regulatory support](service_needed), and [patient recruitment](service_needed)
+    - [Clinical trial management](service_needed) services
+    - [Patient recruitment](service_needed) support
+    - [Regulatory support](service_needed) for FDA submission
+    - [Data management](service_needed) and analysis
+    - [Site management](service_needed)
+    - [Biostatistics](service_needed) services
+    - [Medical writing](service_needed)
+    - [Safety monitoring](service_needed)
+    - [Quality assurance](service_needed)
+
+- intent: provide_patient_population
+  examples: |
+    - Our target is [adults](patient_population)
+    - We're studying [pediatric](patient_population) patients
+    - [Elderly](patient_population) population
+    - [Adults](patient_population) aged 18-65
+    - [Pediatric](patient_population) patients aged 2-17
+    - [Elderly](patient_population) patients over 65
+    - [Adults](patient_population) 18-75 years old
+    - [Pediatric](patient_population) children
+    - [Elderly](patient_population) seniors
+    - [Adults](patient_population) with diabetes
+    - [Pediatric](patient_population) with asthma
+    - [Elderly](patient_population) with heart disease
+
+- intent: provide_timeline
+  examples: |
+    - Our timeline is [6 months](timeline)
+    - The project will take [1 year](timeline)
+    - We have [18 months](timeline) to complete
+    - Timeline is [12 months](timeline)
+    - [6 months](timeline) duration
+    - [1 year](timeline) study
+    - [18 months](timeline) timeline
+    - [12 months](timeline) project
+    - [3 months](timeline) study
+    - [24 months](timeline) clinical trial
+    - [9 months](timeline) timeline
+    - [15 months](timeline) duration
+
+- intent: complete_project_scope
+  examples: |
+    - That's all the information
+    - I've provided everything
+    - That completes our project scope
+    - All information provided
+    - That's everything you need
+    - Complete project scope
+    - Finished providing details
+    - All details provided
+    - That's all the details
+    - Project scope complete
 
 - intent: affirm
   examples: |
@@ -36,6 +127,10 @@ nlu:
     - that's right
     - sure
     - absolutely
+    - right
+    - exactly
+    - ok
+    - okay
 
 - intent: deny
   examples: |
@@ -43,13 +138,27 @@ nlu:
     - not really
     - nope
     - that's not right
+    - incorrect
+    - wrong
+    - not exactly
 
 - intent: select_cro
   examples: |
-    - I want to pick [CRO Alpha](cro_name)
-    - Select [Beta CRO](cro_name)
-    - Choose [Gamma Research](cro_name)
-    - I choose [Delta CRO](cro_name)
+    - I want to pick [Pylon Phenomics](cro_name)
+    - Select [CROquest](cro_name)
+    - Choose [Novotech](cro_name)
+    - I choose [Allucent](cro_name)
+    - [BioAgile](cro_name) looks good
+    - [Clario](cro_name) is my choice
+    - [Fortrea](cro_name) seems right
+    - [Icon](cro_name) is the best match
+    - [Parexel](cro_name) for our project
+    - [Thermo Fisher Scientific](cro_name)
+    - [Syneos Health](cro_name) is perfect
+    - [Medpace](cro_name) is our choice
+    - [Labcorp Drug Development](cro_name)
+    - [Advanced Clinical](cro_name)
+    - [Worldwide Clinical Trials](cro_name)
 
 - intent: send_project
   examples: |
@@ -57,6 +166,12 @@ nlu:
     - Submit the project
     - Forward details
     - Contact the CRO
+    - Send project details
+    - Submit to CRO
+    - Forward to selected CRO
+    - Contact selected CRO
+    - Send project information
+    - Submit project scope
 
 - intent: goodbye
   examples: |
@@ -65,44 +180,7 @@ nlu:
     - see you
     - talk later
     - thanks, bye
-
-- intent: mood_great
-  examples: |
-    - perfect
-    - great
-    - amazing
-    - feeling like a king
-    - wonderful
-    - I am feeling very good
-    - I am great
-    - I am amazing
-    - I am going to save the world
-    - super stoked
-    - extremely good
-    - so so perfect
-    - so good
-    - so perfect
-
-- intent: mood_unhappy
-  examples: |
-    - my day was horrible
-    - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - super sad
-    - I'm so sad
-    - sad
-    - very sad
-    - unhappy
-    - not good
-    - not very good
-    - extremly sad
-    - so saad
-    - so sad
-
-- intent: bot_challenge
-  examples: |
-    - are you a bot?
-    - are you a human?
-    - am I talking to a bot?
-    - am I talking to a human?
+    - thank you, goodbye
+    - end conversation
+    - exit
+    - quit
