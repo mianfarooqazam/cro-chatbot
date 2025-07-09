@@ -1,8 +1,7 @@
 from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.events import SlotSet, EventType, FollowupAction
-import json
+from rasa_sdk.events import SlotSet, 
 from rasa_sdk.forms import FormValidationAction
 
 # Authorized supplier list from CROaccess.com
@@ -121,18 +120,23 @@ class ActionOutputProjectScope(Action):
         services_needed = tracker.get_slot("services_needed")
         patient_population = tracker.get_slot("patient_population")
         timeline = tracker.get_slot("timeline")
-        
-        # Create project scope JSON
-        project_scope = {
-            "studyPhase": study_phase,
-            "therapeuticArea": therapeutic_area,
-            "servicesNeeded": services_needed if services_needed else [],
-            "patientPopulation": patient_population,
-            "timeline": timeline
-        }
-        
-        # Output minified JSON only
-        dispatcher.utter_message(text=json.dumps(project_scope, separators=(',', ':')))
+
+        msg = "Project Scope:\n"
+        if study_phase:
+            msg += f"• Study Phase: {study_phase}\n"
+        if therapeutic_area:
+            msg += f"• Therapeutic Area: {therapeutic_area}\n"
+        if services_needed:
+            msg += f"• Services Needed: {', '.join(services_needed)}\n"
+        if patient_population:
+            msg += f"• Patient Population: {patient_population}\n"
+        if timeline:
+            msg += f"• Timeline: {timeline}\n"
+
+        if msg.strip() == "Project Scope:":
+            msg = "Project information is not available."
+
+        dispatcher.utter_message(text=msg)
         return [SlotSet("project_scope_complete", True)]
 
 class ActionMatchCROs(Action):
@@ -177,7 +181,6 @@ class ActionMatchCROs(Action):
                 elif patient_population.lower() in ['elderly', 'seniors'] and 'geriatric' in expertise.get('specialties', []):
                     score += 3
             
-            # Cap score at 100
             score = min(score, 100)
             
             if score >= 80:
@@ -194,7 +197,7 @@ class ActionMatchCROs(Action):
         # Format response
         msg = "Based on your project requirements, here are the top CRO matches:\n\n"
         for supplier in top_suppliers:
-            msg += f"**{supplier['name']}** (Score: {supplier['score']})\n"
+            msg += f"{supplier['name']} (Score: {supplier['score']})\n"
             msg += f"Reason: {supplier['reason']}\n\n"
         
         msg += "Please type the name of the CRO you'd like to select."
@@ -240,7 +243,7 @@ class ActionSendProject(Action):
         
         msg = (
             f"Perfect! Your project details have been sent to {cro_name}!\n\n"
-            f"**Project Summary:**\n"
+            f"Project Summary:\n"
             f"• Study Phase: {study_phase}\n"
             f"• Therapeutic Area: {therapeutic_area}\n"
             f"• Services Needed: {', '.join(services_needed) if services_needed else 'Not specified'}\n"
@@ -259,5 +262,4 @@ class ValidateProjectScopeForm(FormValidationAction):
         self, value: Text, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]
     ) -> Dict[Text, Any]:
         value = value.strip()
-        # Accept timeline as-is if it matches the new, clear NLU examples
         return {"timeline": value}
