@@ -21,3 +21,31 @@ rules:
   steps:
     - intent: goodbye
     - action: utter_goodbye
+
+- rule: Ask for project description again if not available
+  steps:
+    - intent: out_of_scope
+    - action: utter_service_not_available
+    - action: utter_ask_project
+
+- rule: Validate CRO selection when not in story
+  condition:
+    - slot_was_set:
+        - cro_name: null
+  steps:
+    - intent: select_cro
+    - action: action_validate_cro_selection
+
+- rule: Confirm CRO selection when user affirms
+  condition:
+    - slot_was_set:
+        - needs_cro_confirmation: true
+  steps:
+    - intent: affirm
+    - action: action_confirm_cro_selection
+    - action: action_send_project
+
+- rule: Handle timeline input
+  steps:
+    - intent: provide_timeline
+    - action: utter_ask_project
