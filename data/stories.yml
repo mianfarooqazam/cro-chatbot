@@ -7,38 +7,34 @@ stories:
     - intent: greet
     - action: utter_greet
     - intent: start_project_scoping
-    - action: action_start_project_scoping
+    - action: project_scope_form
+    - active_loop: project_scope_form
     - intent: provide_study_phase
       entities:
         - study_phase: "Phase II"
     - slot_was_set:
         - study_phase: "Phase II"
-    - action: utter_ask_therapeutic_area
     - intent: provide_therapeutic_area
       entities:
-        - therapeutic_area: "oncology"
+        - therapeutic_area: "diabetes"
     - slot_was_set:
-        - therapeutic_area: "oncology"
-    - action: utter_ask_services_needed
+        - therapeutic_area: "diabetes"
     - intent: provide_services_needed
       entities:
-        - service_needed: "clinical trial management"
-        - service_needed: "data management"
+        - service_needed: "patient recruitment"
     - slot_was_set:
-        - services_needed: ["clinical trial management", "data management"]
-    - action: utter_ask_patient_population
+        - services_needed: ["patient recruitment"]
     - intent: provide_patient_population
       entities:
         - patient_population: "adults"
     - slot_was_set:
         - patient_population: "adults"
-    - action: utter_ask_timeline
     - intent: provide_timeline
       entities:
-        - timeline: "1 year"
+        - timeline: "6 months"
     - slot_was_set:
-        - timeline: "1 year"
-    - intent: complete_project_scope
+        - timeline: "6 months"
+    - active_loop: null
     - action: action_output_project_scope
     - action: action_match_cros
     - intent: select_cro
@@ -52,36 +48,10 @@ stories:
   steps:
     - intent: greet
     - action: utter_greet
-    - intent: provide_study_phase
-      entities:
-        - study_phase: "Phase III"
-    - slot_was_set:
-        - study_phase: "Phase III"
-    - action: utter_ask_therapeutic_area
-    - intent: provide_therapeutic_area
-      entities:
-        - therapeutic_area: "cardiology"
-    - slot_was_set:
-        - therapeutic_area: "cardiology"
-    - action: utter_ask_services_needed
-    - intent: provide_services_needed
-      entities:
-        - service_needed: "regulatory support"
-        - service_needed: "patient recruitment"
-    - slot_was_set:
-        - services_needed: ["regulatory support", "patient recruitment"]
-    - action: utter_ask_patient_population
-    - intent: provide_patient_population
-      entities:
-        - patient_population: "elderly"
-    - slot_was_set:
-        - patient_population: "elderly"
-    - action: utter_ask_timeline
-    - intent: provide_timeline
-      entities:
-        - timeline: "18 months"
-    - slot_was_set:
-        - timeline: "18 months"
+    - intent: start_project_scoping
+    - action: project_scope_form
+    - active_loop: project_scope_form
+    - active_loop: null
     - action: action_output_project_scope
     - action: action_match_cros
 
@@ -89,18 +59,9 @@ stories:
   steps:
     - intent: greet
     - action: utter_greet
-    - intent: provide_study_phase
-      entities:
-        - study_phase: "Phase I"
-        - therapeutic_area: "neurology"
-        - service_needed: "clinical trial management"
-        - patient_population: "adults"
-        - timeline: "6 months"
-    - slot_was_set:
-        - study_phase: "Phase I"
-        - therapeutic_area: "neurology"
-        - services_needed: ["clinical trial management"]
-        - patient_population: "adults"
-        - timeline: "6 months"
+    - intent: start_project_scoping
+    - action: project_scope_form
+    - active_loop: project_scope_form
+    - active_loop: null
     - action: action_output_project_scope
     - action: action_match_cros

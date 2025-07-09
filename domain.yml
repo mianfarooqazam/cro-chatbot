@@ -67,6 +67,11 @@ slots:
     initial_value: false
     mappings:
       - type: custom
+  timeline_unit_pending:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: custom
 
 forms:
   project_scope_form:
@@ -111,3 +116,5 @@ actions:
   - action_match_cros
   - action_send_project
   - action_output_project_scope
+  - validate_project_scope_form
+  - action_set_timeline_unit

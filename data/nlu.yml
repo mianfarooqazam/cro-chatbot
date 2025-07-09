@@ -26,61 +26,113 @@ nlu:
 
 - intent: provide_study_phase
   examples: |
-    - We are planning a [Phase I](study_phase) study
-    - This is a [Phase II](study_phase) clinical trial
-    - We need [Phase III](study_phase) support
-    - It's a [Phase IV](study_phase) study
-    - We're in [preclinical](study_phase) stage
-    - [Phase I](study_phase) clinical trial
-    - [Phase II](study_phase) study for our drug
-    - [Phase III](study_phase) trial management
-    - [Phase IV](study_phase) post-marketing study
-    - [Preclinical](study_phase) research
-    - [Phase 1](study_phase) study
-    - [Phase 2](study_phase) trial
-    - [Phase 3](study_phase) clinical trial
-    - [Phase 4](study_phase) study
+    - The study is [Phase I](study_phase)
+    - We are planning a [Phase II](study_phase) trial
+    - It's a [Phase III](study_phase) study
+    - This is a [Phase IV](study_phase) project
+    - We are in [preclinical](study_phase) stage
+    - [Phase I](study_phase)
+    - [Phase II](study_phase)
+    - [Phase III](study_phase)
+    - [Phase IV](study_phase)
+    - [Preclinical](study_phase)
+    - The phase is [Phase I](study_phase)
+    - [Phase 1](study_phase)
+    - [Phase 2](study_phase)
+    - [Phase 3](study_phase)
+    - [Phase 4](study_phase)
 
 - intent: provide_therapeutic_area
   examples: |
-    - Our focus is [oncology](therapeutic_area)
-    - We work in [cardiology](therapeutic_area)
+    - The therapeutic area is [oncology](therapeutic_area)
+    - We are working in [cardiology](therapeutic_area)
     - It's a [neurology](therapeutic_area) project
-    - [Immunology](therapeutic_area) is our specialty
-    - We're developing a [diabetes](therapeutic_area) treatment
-    - [Oncology](therapeutic_area) clinical trial
-    - [Cardiology](therapeutic_area) research
-    - [Neurology](therapeutic_area) study
-    - [Immunology](therapeutic_area) trial
-    - [Diabetes](therapeutic_area) treatment
-    - [Rheumatology](therapeutic_area) project
-    - [Dermatology](therapeutic_area) study
-    - [Respiratory](therapeutic_area) medicine
-    - [Gastroenterology](therapeutic_area) research
+    - [Immunology](therapeutic_area)
+    - [Diabetes](therapeutic_area)
+    - [Oncology](therapeutic_area)
+    - [Cardiology](therapeutic_area)
+    - [Neurology](therapeutic_area)
+    - [Immunology](therapeutic_area)
+    - [Diabetes](therapeutic_area)
+    - [Rheumatology](therapeutic_area)
+    - [Dermatology](therapeutic_area)
+    - [Respiratory](therapeutic_area)
+    - [Gastroenterology](therapeutic_area)
 
 - intent: provide_services_needed
   examples: |
     - We need [clinical trial management](service_needed)
-    - Looking for [data management](service_needed) services
+    - Looking for [data management](service_needed)
     - Need [regulatory support](service_needed)
     - We require [patient recruitment](service_needed)
     - [Clinical trial management](service_needed) and [data management](service_needed)
     - [Regulatory support](service_needed) and [patient recruitment](service_needed)
     - [Data management](service_needed), [regulatory support](service_needed), and [patient recruitment](service_needed)
-    - [Clinical trial management](service_needed) services
-    - [Patient recruitment](service_needed) support
-    - [Regulatory support](service_needed) for FDA submission
-    - [Data management](service_needed) and analysis
     - [Site management](service_needed)
-    - [Biostatistics](service_needed) services
+    - [Biostatistics](service_needed)
     - [Medical writing](service_needed)
     - [Safety monitoring](service_needed)
     - [Quality assurance](service_needed)
+    - [Preclinical research](service_needed)
+    - [Toxicology studies](service_needed)
+    - [Assay development](service_needed)
+    - [Laboratory services](service_needed)
+    - [Bioanalytical services](service_needed)
+    - [Patient reported outcomes](service_needed)
+    - [Commercialization](service_needed)
+    - [Spatial biology](service_needed)
+    - [Single-cell analysis](service_needed)
+    - [Protein production](service_needed)
+    - [Prototyping](service_needed)
+    - [Scientific writing](service_needed)
+    - [Clinical development](service_needed)
+    - [eCOA](service_needed)
+    - [Site management](service_needed)
+    - [Laboratory skills](service_needed)
+    - [Data management](service_needed)
+    - [Assay development](service_needed)
+    - [Biophysical assays and screening](service_needed)
+    - [Spatial imaging analysis](service_needed)
+    - [Large molecule bioanalysis](service_needed)
+    - [Comprehensive pathology solutions](service_needed)
+    - [Clinical diagnostics](service_needed)
+    - [Data management](service_needed)
+    - [Scientific writing](service_needed)
+    - [Prototyping](service_needed)
+    - [Laboratory services](service_needed)
+    - [Clinical trial management](service_needed)
+    - [Patient recruitment](service_needed)
+    - [Regulatory support](service_needed)
+    - [Medical writing](service_needed)
+    - [Biostatistics](service_needed)
+    - [Site management](service_needed)
+    - [Quality assurance](service_needed)
+    - [Safety monitoring](service_needed)
+    - [Commercialization](service_needed)
+    - [Patient reported outcomes](service_needed)
+    - [Preclinical research](service_needed)
+    - [Toxicology studies](service_needed)
+    - [Assay development](service_needed)
+    - [Laboratory services](service_needed)
+    - [Bioanalytical services](service_needed)
+    - [Spatial biology](service_needed)
+    - [Single-cell analysis](service_needed)
+    - [Protein production](service_needed)
+    - [Prototyping](service_needed)
+    - [Scientific writing](service_needed)
+    - [Clinical development](service_needed)
+    - [eCOA](service_needed)
+    - [Laboratory skills](service_needed)
+    - [Biophysical assays and screening](service_needed)
+    - [Spatial imaging analysis](service_needed)
+    - [Large molecule bioanalysis](service_needed)
+    - [Comprehensive pathology solutions](service_needed)
+    - [Clinical diagnostics](service_needed)
 
 - intent: provide_patient_population
   examples: |
-    - Our target is [adults](patient_population)
-    - We're studying [pediatric](patient_population) patients
+    - The patient population is [adults](patient_population)
+    - We are studying [pediatric](patient_population) patients
     - [Elderly](patient_population) population
     - [Adults](patient_population) aged 18-65
     - [Pediatric](patient_population) patients aged 2-17
@@ -91,10 +143,13 @@ nlu:
     - [Adults](patient_population) with diabetes
     - [Pediatric](patient_population) with asthma
     - [Elderly](patient_population) with heart disease
+    - [Adults](patient_population)
+    - [Pediatric](patient_population)
+    - [Elderly](patient_population)
 
 - intent: provide_timeline
   examples: |
-    - Our timeline is [6 months](timeline)
+    - The timeline is [6 months](timeline)
     - The project will take [1 year](timeline)
     - We have [18 months](timeline) to complete
     - Timeline is [12 months](timeline)
@@ -106,6 +161,29 @@ nlu:
     - [24 months](timeline) clinical trial
     - [9 months](timeline) timeline
     - [15 months](timeline) duration
+    - 5 months
+    - 1 year
+    - 7 year
+    - one year
+    - 8
+    - 6 month
+    - it is 6 months
+    - project timeline is 6 months
+    - our timeline is 6 months
+    - 1
+    - 1 month
+    - 1 months
+    - 1 years
+    - 18 months
+    - 12 months
+    - 24 months
+    - 2 years
+    - two years
+    - 3 months
+    - three months
+    - 10 months
+    - 10 month
+    - 10
 
 - intent: complete_project_scope
   examples: |
@@ -184,3 +262,21 @@ nlu:
     - end conversation
     - exit
     - quit
+
+- intent: inform_timeline_unit
+  examples: |
+    - weeks
+    - week
+    - months
+    - month
+    - years
+    - year
+    - 5 months
+    - 5 years
+    - 5 weeks
+    - I meant months
+    - I meant years
+    - I meant weeks
+    - months please
+    - years please
+    - weeks please

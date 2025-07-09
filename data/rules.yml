@@ -2,48 +2,18 @@ version: "3.1"
 
 rules:
 
-# Removed the rule that used utter_ask_study_phase after start_project_scoping
-
-- rule: Start project scoping
+- rule: Activate project scope form
   steps:
     - intent: start_project_scoping
-    - action: action_start_project_scoping
+    - action: project_scope_form
+    - active_loop: project_scope_form
 
-- rule: Ask for therapeutic area after study phase
+- rule: Submit project scope form
   condition:
-    - slot_was_set:
-        - study_phase: true
+    - active_loop: project_scope_form
   steps:
-    - action: utter_ask_therapeutic_area
-
-- rule: Ask for services after therapeutic area
-  condition:
-    - slot_was_set:
-        - therapeutic_area: true
-  steps:
-    - action: utter_ask_services_needed
-
-- rule: Ask for patient population after services
-  condition:
-    - slot_was_set:
-        - services_needed: true
-  steps:
-    - action: utter_ask_patient_population
-
-- rule: Ask for timeline after patient population
-  condition:
-    - slot_was_set:
-        - patient_population: true
-  steps:
-    - action: utter_ask_timeline
-
-# Updated this rule to allow action_match_cros to follow action_output_project_scope
-- rule: Output project scope and match CROs when complete
-  condition:
-    - slot_was_set:
-        - timeline: true
-  steps:
-    - intent: complete_project_scope
+    - action: project_scope_form
+    - active_loop: null
     - action: action_output_project_scope
     - action: action_match_cros
 
@@ -56,3 +26,11 @@ rules:
   steps:
     - intent: goodbye
     - action: utter_goodbye
+
+- rule: Clarify timeline unit
+  condition:
+    - slot_was_set:
+        - timeline_unit_pending: true
+  steps:
+    - intent: inform_timeline_unit
+    - action: action_set_timeline_unit
