@@ -150,40 +150,33 @@ nlu:
 - intent: provide_timeline
   examples: |
     - The timeline is [6 months](timeline)
-    - The project will take [1 year](timeline)
-    - We have [18 months](timeline) to complete
-    - Timeline is [12 months](timeline)
-    - [6 months](timeline) duration
-    - [1 year](timeline) study
-    - [18 months](timeline) timeline
-    - [12 months](timeline) project
-    - [3 months](timeline) study
-    - [24 months](timeline) clinical trial
-    - [9 months](timeline) timeline
-    - [15 months](timeline) duration
-    - 5 months
-    - 1 year
-    - 7 year
-    - one year
-    - 8
-    - 6 month
-    - it is 6 months
-    - project timeline is 6 months
-    - our timeline is 6 months
-    - 1
-    - 1 month
-    - 1 months
-    - 1 years
-    - 18 months
-    - 12 months
-    - 24 months
-    - 2 years
-    - two years
-    - 3 months
-    - three months
-    - 10 months
-    - 10 month
-    - 10
+    - The project will take [12 months](timeline)
+    - We have [18 months](timeline)
+    - Timeline is [24 months](timeline)
+    - [3 months](timeline)
+    - [6 months](timeline)
+    - [12 months](timeline)
+    - [18 months](timeline)
+    - [24 months](timeline)
+    - [1 year](timeline)
+    - [2 years](timeline)
+    - [3 years](timeline)
+    - [6 weeks](timeline)
+    - [12 weeks](timeline)
+    - [18 weeks](timeline)
+    - [24 weeks](timeline)
+    - [1 month](timeline)
+    - [2 months](timeline)
+    - [3 months](timeline)
+    - [6 months](timeline)
+    - [1 week](timeline)
+    - [2 weeks](timeline)
+    - [3 weeks](timeline)
+    - [6 weeks](timeline)
+    - [1 day](timeline)
+    - [2 days](timeline)
+    - [3 days](timeline)
+    - [6 days](timeline)
 
 - intent: complete_project_scope
   examples: |

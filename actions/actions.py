@@ -258,43 +258,6 @@ class ValidateProjectScopeForm(FormValidationAction):
     def validate_timeline(
         self, value: Text, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]
     ) -> Dict[Text, Any]:
-        import re
-        value = value.strip().lower()
-        # Convert words to numbers (simple cases)
-        value = value.replace("one", "1").replace("two", "2").replace("three", "3")
-        value = value.replace("four", "4").replace("five", "5").replace("six", "6")
-        value = value.replace("seven", "7").replace("eight", "8").replace("nine", "9").replace("ten", "10")
-        # If only a number is given, ask for clarification
-        if re.match(r"^\d+$", value):
-            dispatcher.utter_message(text=f"Thanks. Just to be clear, does that mean {value} weeks, {value} months, or {value} years for the timeline?")
-            return {"timeline": None, "timeline_unit_pending": value}
-        # Fix singular/plural
-        value = re.sub(r"month(s)?", "months", value)
-        value = re.sub(r"year(s)?", "years", value)
-        value = re.sub(r"week(s)?", "weeks", value)
-        return {"timeline": value, "timeline_unit_pending": None}
-
-# Custom action to handle timeline unit clarification
-class ActionSetTimelineUnit(Action):
-    def name(self) -> Text:
-        return "action_set_timeline_unit"
-
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[EventType]:
-        pending_value = tracker.get_slot("timeline_unit_pending")
-        unit = tracker.latest_message.get("text", "").strip().lower()
-        if pending_value and unit in ["weeks", "week", "months", "month", "years", "year"]:
-            # Normalize unit
-            if unit.startswith("week"):
-                timeline = f"{pending_value} weeks"
-            elif unit.startswith("month"):
-                timeline = f"{pending_value} months"
-            elif unit.startswith("year"):
-                timeline = f"{pending_value} years"
-            else:
-                timeline = f"{pending_value} {unit}"
-            dispatcher.utter_message(text=f"Timeline set to: {timeline}")
-            # Resume the form after setting the slot
-            return [SlotSet("timeline", timeline), SlotSet("timeline_unit_pending", None), FollowupAction("project_scope_form")]
-        else:
-            dispatcher.utter_message(text="Please specify if you meant weeks, months, or years.")
-            return []
+        value = value.strip()
+        # Accept timeline as-is if it matches the new, clear NLU examples
+        return {"timeline": value}
