@@ -1,7 +1,7 @@
 from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.events import SlotSet, 
+from rasa_sdk.events import SlotSet
 from rasa_sdk.forms import FormValidationAction
 
 # Authorized supplier list from CROaccess.com
@@ -187,7 +187,13 @@ class ActionMatchCROs(Action):
                 supplier_scores.append({
                     'name': supplier,
                     'score': score,
-                    'reason': self._generate_reason(supplier, expertise, study_phase, therapeutic_area, services_needed)
+                    'reason': self._generate_reason(
+                        supplier,
+                        expertise,
+                        study_phase or "",
+                        therapeutic_area or "",
+                        services_needed or []
+                    )
                 })
         
         # Sort by score and take top 5
