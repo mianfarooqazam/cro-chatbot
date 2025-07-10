@@ -129,6 +129,7 @@ class ActionOutputProjectScope(Action):
         patient_population = tracker.get_slot("patient_population")
         timeline = tracker.get_slot("timeline")
 
+        # Project Scope
         msg = "Project Scope:\n"
         if study_phase:
             msg += f"• Study Phase: {study_phase}\n"
@@ -145,6 +146,28 @@ class ActionOutputProjectScope(Action):
             msg = "Project information is not available."
 
         dispatcher.utter_message(text=msg)
+
+        # Brief Project Report
+        report = "Project Report:\n"
+        summary_lines = []
+        if study_phase and therapeutic_area:
+            summary_lines.append(f"This project is designed as a {study_phase} clinical study in the therapeutic area of {therapeutic_area}.")
+        elif study_phase:
+            summary_lines.append(f"This project is designed as a {study_phase} clinical study.")
+        elif therapeutic_area:
+            summary_lines.append(f"This project focuses on the therapeutic area of {therapeutic_area}.")
+        if patient_population:
+            summary_lines.append(f"The target patient population consists of {patient_population}.")
+        if services_needed:
+            summary_lines.append(f"Key services required for this project include: {', '.join(services_needed)}.")
+        if timeline:
+            summary_lines.append(f"The anticipated project duration is {timeline}.")
+        if summary_lines:
+            report += "\n".join(summary_lines)
+        else:
+            report += "Project details are incomplete."
+
+        dispatcher.utter_message(text=report)
         return [SlotSet("project_scope_complete", True)]
 
 class ActionMatchCROs(Action):
