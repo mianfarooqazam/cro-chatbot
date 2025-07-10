@@ -84,7 +84,7 @@ forms:
 
 responses:
   utter_greet:
-    - text: "Hello! I'm CRO-AI, your expert assistant for CROaccess.com. I'm here to help you build a detailed project scope and find the perfect CRO for your research needs. Can you tell me about your project?"
+    - text: "Hello! I'm CRO-AI, your expert assistant for CROaccess.com. I'm here to help you build a detailed project scope and find the perfect CRO for your research needs. Please describe your project or clinical trial needs?"
   
   utter_ask_study_phase:
     - text: "What phase of study are you planning? (e.g., Phase I, Phase II, Phase III, Phase IV, Preclinical)"
@@ -118,3 +118,4 @@ actions:
   - action_output_project_scope
   - validate_project_scope_form
   - action_set_timeline_unit
+  - action_start_project_scoping_fallback

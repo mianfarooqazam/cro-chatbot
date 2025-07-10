@@ -1,7 +1,7 @@
 from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.events import SlotSet
+from rasa_sdk.events import SlotSet, AllSlotsReset, ActiveLoop
 from rasa_sdk.forms import FormValidationAction
 
 # Authorized supplier list from CROaccess.com
@@ -108,6 +108,14 @@ class ActionStartProjectScoping(Action):
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         dispatcher.utter_message(text="Great! Let's start building your project scope. What phase of study are you planning? (e.g., Phase I, Phase II, Phase III, Phase IV, Preclinical)")
+        return []
+
+class ActionStartProjectScopingFallback(Action):
+    def name(self) -> Text:
+        return "action_start_project_scoping_fallback"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        dispatcher.utter_message(text="I don't get what you are asking, you want help for your project or do you want to find CRO?")
         return []
 
 class ActionOutputProjectScope(Action):
@@ -264,8 +272,86 @@ class ValidateProjectScopeForm(FormValidationAction):
     def name(self) -> Text:
         return "validate_project_scope_form"
 
-    def validate_timeline(
-        self, value: Text, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]
-    ) -> Dict[Text, Any]:
-        value = value.strip()
-        return {"timeline": value}
+    def extract_requested_slot(self, tracker: Tracker) -> str:
+        return tracker.get_slot("requested_slot")
+
+    def validate(self, dispatcher, tracker, domain):
+        # Context switching: If user triggers start_project_scoping intent mid-form, reset all slots and restart
+        latest_intent = tracker.latest_message.get("intent", {}).get("name")
+        if latest_intent == "start_project_scoping":
+            dispatcher.utter_message(text="Understood, let's start a new project scope. What phase of study are you planning? (e.g., Phase I, Phase II, Phase III, Phase IV, Preclinical)")
+            events = [AllSlotsReset(), ActiveLoop("project_scope_form")]
+            return events
+        # Otherwise, use default validation
+        return super().validate(dispatcher, tracker, domain)
+
+    def validate_study_phase(self, value: Text, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> Dict[Text, Any]:
+        requested = tracker.get_slot("requested_slot")
+        if requested != "study_phase":
+            return {"study_phase": tracker.get_slot("study_phase")}
+        valid_phases = [
+            "phase i", "phase 1", "phase ii", "phase 2", "phase iii", "phase 3", "phase iv", "phase 4", "preclinical"
+        ]
+        if value.strip().lower() in valid_phases:
+            return {"study_phase": value.strip()}
+        dispatcher.utter_message(text="Sorry, I didn't understand the study phase. Could you please clarify?")
+        return {"study_phase": None}
+
+    def validate_therapeutic_area(self, value: Text, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> Dict[Text, Any]:
+        requested = tracker.get_slot("requested_slot")
+        if requested != "therapeutic_area":
+            return {"therapeutic_area": tracker.get_slot("therapeutic_area")}
+        valid_areas = [
+            "oncology", "cardiology", "neurology", "immunology", "diabetes", "rheumatology", "dermatology", "respiratory", "gastroenterology"
+        ]
+        if value.strip().lower() in valid_areas:
+            return {"therapeutic_area": value.strip()}
+        dispatcher.utter_message(text="Sorry, I didn't understand the therapeutic area. Could you please clarify?")
+        return {"therapeutic_area": None}
+
+    def validate_services_needed(self, value: Any, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> Dict[Text, Any]:
+        requested = tracker.get_slot("requested_slot")
+        if requested != "services_needed":
+            return {"services_needed": tracker.get_slot("services_needed")}
+        valid_services = [
+            "clinical trial management", "data management", "regulatory support", "patient recruitment", "site management", "biostatistics", "medical writing", "safety monitoring", "quality assurance", "preclinical research", "toxicology studies", "assay development", "laboratory services", "bioanalytical services", "patient reported outcomes", "commercialization", "spatial biology", "single-cell analysis", "protein production", "prototyping", "scientific writing", "clinical development", "ecoa", "laboratory skills", "biophysical assays and screening", "spatial imaging analysis", "large molecule bioanalysis", "comprehensive pathology solutions", "clinical diagnostics"
+        ]
+        # Accept a list or a single string
+        if isinstance(value, list):
+            cleaned = [v.strip().lower() for v in value]
+            invalid = [v for v in cleaned if v not in valid_services]
+            if not invalid and cleaned:
+                return {"services_needed": value}
+            if invalid:
+                dispatcher.utter_message(text=f"None of our listed CROs provide such service. Instead, we can help with the following services: {', '.join(valid_services)}. Please pick from these.")
+                return {"services_needed": None}
+        elif isinstance(value, str):
+            if value.strip().lower() in valid_services:
+                return {"services_needed": [value.strip()]}
+            dispatcher.utter_message(text=f"None of our listed CROs provide such service. Instead, we can help with the following services: {', '.join(valid_services)}. Please pick from these.")
+            return {"services_needed": None}
+        dispatcher.utter_message(text=f"Sorry, I didn't understand the services needed. Could you please clarify?")
+        return {"services_needed": None}
+
+    def validate_patient_population(self, value: Text, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> Dict[Text, Any]:
+        requested = tracker.get_slot("requested_slot")
+        if requested != "patient_population":
+            return {"patient_population": tracker.get_slot("patient_population")}
+        valid_populations = [
+            "adults", "pediatric", "elderly"
+        ]
+        if value.strip().lower() in valid_populations:
+            return {"patient_population": value.strip()}
+        dispatcher.utter_message(text="Sorry, I didn't understand the patient population. Could you please clarify?")
+        return {"patient_population": None}
+
+    def validate_timeline(self, value: Text, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> Dict[Text, Any]:
+        requested = tracker.get_slot("requested_slot")
+        if requested != "timeline":
+            return {"timeline": tracker.get_slot("timeline")}
+        import re
+        pattern = r"^(\d+\s*(months?|weeks?|years?|days?))$"
+        if re.match(pattern, value.strip().lower()):
+            return {"timeline": value.strip()}
+        dispatcher.utter_message(text="Sorry, I didn't understand the timeline. Could you please clarify (e.g., '6 months', '12 weeks')?")
+        return {"timeline": None}

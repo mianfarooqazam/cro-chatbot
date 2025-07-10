@@ -10,6 +10,7 @@ nlu:
     - good afternoon
     - start
     - begin
+    - how are you
 
 - intent: start_project_scoping
   examples: |
@@ -23,6 +24,7 @@ nlu:
     - I need clinical trial support
     - Looking for a CRO
     - Need help with research project
+    - Spatial Analysis on 4 FFPE tissues
 
 - intent: provide_study_phase
   examples: |

@@ -34,3 +34,8 @@ rules:
   steps:
     - intent: inform_timeline_unit
     - action: action_set_timeline_unit
+
+- rule: Clarify project scoping intent if not understood
+  steps:
+    - intent: nlu_fallback
+    - action: action_start_project_scoping_fallback
