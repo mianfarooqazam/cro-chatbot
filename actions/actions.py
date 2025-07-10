@@ -346,12 +346,14 @@ class ValidateProjectScopeForm(FormValidationAction):
             if not invalid and cleaned:
                 return {"services_needed": value}
             if invalid:
-                dispatcher.utter_message(text=f"None of our listed CROs provide such service. Instead, we can help with the following services: {', '.join(valid_services)}. Please pick from these.")
+                bullets = "\n".join([f"• {s.title()}" for s in valid_services])
+                dispatcher.utter_message(text=f"None of our listed CROs provide such service. Instead, we can help with the following services:\n{bullets}\nPlease pick from these.")
                 return {"services_needed": None}
         elif isinstance(value, str):
             if value.strip().lower() in valid_services:
                 return {"services_needed": [value.strip()]}
-            dispatcher.utter_message(text=f"None of our listed CROs provide such service. Instead, we can help with the following services: {', '.join(valid_services)}. Please pick from these.")
+            bullets = "\n".join([f"• {s.title()}" for s in valid_services])
+            dispatcher.utter_message(text=f"None of our listed CROs provide such service. Instead, we can help with the following services:\n{bullets}\nPlease pick from these.")
             return {"services_needed": None}
         dispatcher.utter_message(text=f"Sorry, I didn't understand the services needed. Could you please clarify?")
         return {"services_needed": None}
