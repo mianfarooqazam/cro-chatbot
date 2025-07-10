@@ -317,7 +317,14 @@ class ValidateProjectScopeForm(FormValidationAction):
         ]
         if value.strip().lower() in valid_phases:
             return {"study_phase": value.strip()}
-        dispatcher.utter_message(text="Sorry, I didn't understand the study phase. Could you please clarify?")
+        bullets = "\n".join([
+            "• Phase I",
+            "• Phase II",
+            "• Phase III",
+            "• Phase IV",
+            "• Preclinical"
+        ])
+        dispatcher.utter_message(text=f"I don't understand what you are saying. Please clarify. Here are the valid study phases you can choose from:\n{bullets}")
         return {"study_phase": None}
 
     def validate_therapeutic_area(self, value: Text, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> Dict[Text, Any]:
@@ -329,7 +336,18 @@ class ValidateProjectScopeForm(FormValidationAction):
         ]
         if value.strip().lower() in valid_areas:
             return {"therapeutic_area": value.strip()}
-        dispatcher.utter_message(text="Sorry, I didn't understand the therapeutic area. Could you please clarify?")
+        bullets = "\n".join([
+            "• Oncology",
+            "• Cardiology",
+            "• Neurology",
+            "• Immunology",
+            "• Diabetes",
+            "• Rheumatology",
+            "• Dermatology",
+            "• Respiratory",
+            "• Gastroenterology"
+        ])
+        dispatcher.utter_message(text=f"I don't understand what you are saying. Please clarify. Here are the valid therapeutic areas you can choose from:\n{bullets}")
         return {"therapeutic_area": None}
 
     def validate_services_needed(self, value: Any, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> Dict[Text, Any]:
@@ -339,7 +357,6 @@ class ValidateProjectScopeForm(FormValidationAction):
         valid_services = [
             "clinical trial management", "data management", "regulatory support", "patient recruitment", "site management", "biostatistics", "medical writing", "safety monitoring", "quality assurance", "preclinical research", "toxicology studies", "assay development", "laboratory services", "bioanalytical services", "patient reported outcomes", "commercialization", "spatial biology", "single-cell analysis", "protein production", "prototyping", "scientific writing", "clinical development", "ecoa", "laboratory skills", "biophysical assays and screening", "spatial imaging analysis", "large molecule bioanalysis", "comprehensive pathology solutions", "clinical diagnostics"
         ]
-        # Accept a list or a single string
         if isinstance(value, list):
             cleaned = [v.strip().lower() for v in value]
             invalid = [v for v in cleaned if v not in valid_services]
@@ -347,15 +364,15 @@ class ValidateProjectScopeForm(FormValidationAction):
                 return {"services_needed": value}
             if invalid:
                 bullets = "\n".join([f"• {s.title()}" for s in valid_services])
-                dispatcher.utter_message(text=f"None of our listed CROs provide such service. Instead, we can help with the following services:\n{bullets}\nPlease pick from these.")
+                dispatcher.utter_message(text=f"I don't understand what you are saying. Please clarify. Here are the valid services you can choose from:\n{bullets}")
                 return {"services_needed": None}
         elif isinstance(value, str):
             if value.strip().lower() in valid_services:
                 return {"services_needed": [value.strip()]}
             bullets = "\n".join([f"• {s.title()}" for s in valid_services])
-            dispatcher.utter_message(text=f"None of our listed CROs provide such service. Instead, we can help with the following services:\n{bullets}\nPlease pick from these.")
+            dispatcher.utter_message(text=f"I don't understand what you are saying. Please clarify. Here are the valid services you can choose from:\n{bullets}")
             return {"services_needed": None}
-        dispatcher.utter_message(text=f"Sorry, I didn't understand the services needed. Could you please clarify?")
+        dispatcher.utter_message(text=f"I don't understand what you are saying. Please clarify. Here are the valid services you can choose from:")
         return {"services_needed": None}
 
     def validate_patient_population(self, value: Text, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> Dict[Text, Any]:
@@ -367,7 +384,12 @@ class ValidateProjectScopeForm(FormValidationAction):
         ]
         if value.strip().lower() in valid_populations:
             return {"patient_population": value.strip()}
-        dispatcher.utter_message(text="Sorry, I didn't understand the patient population. Could you please clarify?")
+        bullets = "\n".join([
+            "• Adults",
+            "• Pediatric",
+            "• Elderly"
+        ])
+        dispatcher.utter_message(text=f"I don't understand what you are saying. Please clarify. Here are the valid patient populations you can choose from:\n{bullets}")
         return {"patient_population": None}
 
     def validate_timeline(self, value: Text, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> Dict[Text, Any]:
@@ -378,5 +400,21 @@ class ValidateProjectScopeForm(FormValidationAction):
         pattern = r"^(\d+\s*(months?|weeks?|years?|days?))$"
         if re.match(pattern, value.strip().lower()):
             return {"timeline": value.strip()}
-        dispatcher.utter_message(text="Sorry, I didn't understand the timeline. Could you please clarify (e.g., '6 months', '12 weeks')?")
+        examples = "\n".join([
+            "• 6 months",
+            "• 12 months",
+            "• 18 months",
+            "• 24 months",
+            "• 1 year",
+            "• 2 years",
+            "• 3 years",
+            "• 6 weeks",
+            "• 12 weeks",
+            "• 18 weeks",
+            "• 24 weeks",
+            "• 1 month",
+            "• 2 months",
+            "• 3 months"
+        ])
+        dispatcher.utter_message(text=f"I don't understand what you are saying. Please clarify. Please provide the timeline in a format like one of these examples:\n{examples}")
         return {"timeline": None}
